@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Your Harsh</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  margin:0;
+  font-family:'Inter', sans-serif;
+  background:#111;
+  color:white;
+  transition:background 0.6s ease;
+  min-height:100vh;
+}
+
+.container{
+  max-width:950px;
+  margin:60px auto;
+  padding:40px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(15px);
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+
+h1{
+  font-family:'Playfair Display', serif;
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  opacity:0.75;
+  margin-bottom:40px;
+}
+
+.section{
+  margin:35px 0;
+}
+
+.section h2{
+  font-weight:600;
+  margin-bottom:15px;
+}
+
+button.option{
+  width:220px;
+  height:52px;
+  margin:10px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.25);
+  background:rgba(255,255,255,0.08);
+  color:white;
+  cursor:pointer;
+  font-size:14px;
+  transition:all 0.25s ease;
+}
+
+button.option:hover{
+  background:rgba(255,255,255,0.18);
+  transform:translateY(-2px);
+}
+
+button.selected{
+  border:2px solid white;
+  background:rgba(255,255,255,0.35);
+  box-shadow:0 0 20px rgba(255,255,255,0.5);
+  transform:scale(1.05);
+}
+
+#generate{
+  margin-top:40px;
+  padding:14px 40px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  background:white;
+  color:black;
+  transition:0.3s;
+}
+
+#generate:hover{
+  transform:scale(1.07);
+}
+
+#resultScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:40px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.6s ease;
+}
+
+#resultScreen.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+#resultMessage{
+  font-family:'Playfair Display', serif;
+  font-size:28px;
+  max-width:700px;
+  line-height:1.6;
+  white-space:pre-line;
+}
+
+#resultImage{
+  max-width:350px;
+  margin-top:30px;
+  border-radius:20px;
+  display:none;
+}
+
+#backBtn{
+  margin-top:40px;
+  padding:12px 30px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  background:white;
+  color:black;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Build Your Harsh 💘</h1>
+  <div class="subtitle">Customize the boyfriend you're missing.</div>
+
+  <div class="section">
+    <h2>🧠 Mood</h2>
+    <button class="option" onclick="selectOption('mood','shy',this)">Shy</button>
+    <button class="option" onclick="selectOption('mood','clingy',this)">Clingy</button>
+    <button class="option" onclick="selectOption('mood','possessive',this)">Possessive</button>
+  </div>
+
+  <div class="section">
+    <h2>📍 Situation</h2>
+    <button class="option" onclick="selectOption('situation','night',this)">Late Night Call 🌙</button>
+    <button class="option" onclick="selectOption('situation','midday',this)">Random Midday Text ☀️</button>
+  </div>
+
+  <div class="section">
+    <h2>⚡ Energy</h2>
+    <button class="option" onclick="selectOption('energy','soft',this)">Soft Mode 🧸</button>
+    <button class="option" onclick="selectOption('energy','missing',this)">Missing You 💌</button>
+    <button class="option" onclick="selectOption('energy','obsessed',this)">Fully Obsessed 🔥</button>
+  </div>
+
+  <button id="generate" onclick="generateHarsh()">Generate Harsh ✨</button>
+</div>
+
+<div id="resultScreen">
+  <div id="resultMessage">Your custom message appears here.</div>
+  <img id="resultImage">
+  <button id="backBtn" onclick="goBack()">Build Again</button>
+</div>
+
+<script>
+
+/* COLOR SYSTEM */
+
+const colors = {
+  mood:{
+    shy:"#6c7ae0",
+    clingy:"#d63384",
+    possessive:"#7f1d1d"
+  },
+  situation:{
+    night:"#2b2d42",
+    midday:"#f4a261"
+  },
+  energy:{
+    soft:"#8ecae6",
+    missing:"#ff6b6b",
+    obsessed:"#ff0033"
+  }
+};
+
+let selections={mood:null,situation:null,energy:null};
+
+/* BUTTON SELECT */
+
+function selectOption(category,value,btn){
+  selections[category]=value;
+  btn.parentNode.querySelectorAll("button").forEach(b=>b.classList.remove("selected"));
+  btn.classList.add("selected");
+  updateBackground();
+}
+
+/* BACKGROUND LOGIC */
+
+function updateBackground(){
+  const selectedColors=[];
+
+  if(selections.mood)
+    selectedColors.push(colors.mood[selections.mood]);
+
+  if(selections.situation)
+    selectedColors.push(colors.situation[selections.situation]);
+
+  if(selections.energy)
+    selectedColors.push(colors.energy[selections.energy]);
+
+  if(selectedColors.length===1)
+    document.body.style.background=selectedColors[0];
+
+  if(selectedColors.length===2)
+    document.body.style.background=
+      `linear-gradient(135deg,${selectedColors[0]},${selectedColors[1]})`;
+
+  if(selectedColors.length===3)
+    document.body.style.background=
+      `linear-gradient(135deg,${selectedColors[0]},${selectedColors[1]},${selectedColors[2]})`;
+}
+
+/* GENERATE */
+
+function generateHarsh(){
+
+  const {mood,situation,energy}=selections;
+
+  if(!mood||!situation||!energy){
+    alert("Complete your build first.");
+    return;
+  }
+
+  const result=document.getElementById("resultScreen");
+  const message=document.getElementById("resultMessage");
+  const img=document.getElementById("resultImage");
+
+  img.style.display="none";
+
+  if(mood==="shy")
+    result.style.background="radial-gradient(circle,#3a3d98,#1b1b2f)";
+
+  if(mood==="clingy")
+    result.style.background="radial-gradient(circle,#ff4d6d,#590d22)";
+
+  if(mood==="possessive")
+    result.style.background="radial-gradient(circle,#8b0000,#240000)";
+
+  const key=mood+"-"+situation+"-"+energy;
+
+  if(builds[key]){
+    message.innerText=builds[key].message;
+
+    if(builds[key].image){
+      img.src=builds[key].image;
+      img.style.display="block";
+    }
+  } else{
+    message.innerText="This version of Harsh is still under construction.";
+  }
+
+  result.classList.add("active");
+}
+
+function goBack(){
+  document.getElementById("resultScreen").classList.remove("active");
+}
+
+/* 18 BUILDS */
+
+const builds={
+
+  "shy-night-soft":{message:`SHY • NIGHT • SOFT\n\nUmm, i wanted tell you that you are the prettiest pie ever 🙈. You deserve to be wrapped around in your blanket and kissed....sooo can i kiss? 👉👈 `,image:""},
+  "shy-night-missing":{message:`SHY • NIGHT • MISSING\n\nIsha pie, they say sweet things must be avoided before sleeping, but i miss you soooo much tonight... what do i do khekhekhekhe?`,image:""},
+  "shy-night-obsessed":{message:`SHY • NIGHT • OBSESSED\n\nmuah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 muah 🙉 `,image:""},
+
+  "shy-midday-soft":{message:`SHY • MIDDAY • SOFT\n\nHi cutie pie!!! You look so gorgeous under the sun, with your golden light brown skin reflecting the sunligh ooof.... just take my heart already (its already with you though)`,image:""},
+  "shy-midday-missing":{message:`SHY • MIDDAY • MISSING\n\nOh how much i miss walking with you around tingre nagar, in the middle of the day right before our exams... oh how we kissed under the cute flowers... Oh how cute you looked in the blue top and those leggings...i wish i could relive all of that...`,image:""},
+  "shy-midday-obsessed":{message:`SHY • MIDDAY • OBSESSED\n\nThe world needs sun for survival, it provides both heat and light. Isha, you are both my world and my sun, giving me the necessary conditions to survive (i photosynthesise in your presence),`,image:""},
+
+  "clingy-night-soft":{message:`CLINGY • NIGHT • SOFT\n\nMy dearest Isha, The starry light has lost its charm without you. The cold breez does not bring me joy when i am not around you. But i am at a loss at how beautiful the world gets as it dazzles in your light...`,image:""},
+  "clingy-night-missing":{message:`CLINGY • NIGHT • MISSING\n\nHonnnnnn why are you so far away from me right nowwwwwwww. My bed is so empty without youuuuuuu. My hand is so cold withouy your handddddddd. Jaldi se aa and hold it and sit with me chipak ke.😤'`,image:""},
+  "clingy-night-obsessed":{message:`CLINGY • NIGHT • OBSESSED\n\nOh my beloved, how you said that you were a moth blinded by a flame... My sweet little moth, oh how i would do everything to keep you happy and safe. Afterall, how could this stupid candle let such a beautiful dazzling moth get away? `,image:""},
+
+  "clingy-midday-soft":{message:`CLINGY • MIDDAY • SOFT\n\nHello Isha Bhatia. Why are you not texting me rightnow? It is important that you text me right now and give me kisses right now. Its very very very important for the survival of all cute things (i am the cute thing)`,image:""},
+  "clingy-midday-missing":{message:`CLINGY • MIDDAY • MISSING\n\nDo you remember when you'd pass on your mom's scooty and i would literally run to the window like rapunzel😭 I miss it so much. I miss listening to songs together, watching chickflicks, anime, colouring on snapchat and everything else... I miss you so much`,image:""},
+  "clingy-midday-obsessed":{message:`CLINGY • MIDDAY • OBSESSED\n\nWhy are we not walking somewhere holding hands right now? Why are we not talking so much we ran out of topics and then you would say "soooo do you like clouds" I dont just miss you bhatia, i crave you. My favourate notification, my favourite distraction,If loving you was a game, thennn yeah, I'm a gamer hehehe.`,image:""},
+
+  "possessive-night-soft":{message:`POSSESSIVE • NIGHT • SOFT\n\nWell isha, here is the deal. We are participating in the "best couple" competition and we are winning it. Idc, we are going to show the world what it means to be a partner... You and I together... afterall, we are meant to be. You were always meant to be mine, and I yours...`,image:""},
+  "possessive-night-missing":{message:`POSSESSIVE • NIGHT • MISSING\n\nYou shall remain mine forever. You do not have have a choice... afterall abcdefg H+I jklmnop`,image:""},
+  "possessive-night-obsessed":{message:`POSSESSIVE • NIGHT • OBSESSED\n\nOh isha how much I crave owning you tonight. Just you and me breathless and intense... How could i not be obsessed with you when you look like that???`,image:""},
+
+  "possessive-midday-soft":{message:`POSSESSIVE • MIDDAY • SOFT\n\n"Ready up in the dress and heels i got darling, we are going out. I ll be taking care of everything so poweroff your mind and focus on me. I ll pick you up in 15 minutes....", I hope i get this oppoortunity soon.`,image:""},
+  "possessive-midday-missing":{message:`POSSESSIVE • MIDDAY • MISSING\n\nIts absolutely unfair that so many people see you in broad daylight. If I could, i wouldnt let anyone set their eyesight on you... You would be for my eyes only.... I dont just miss you.. I want you, i want the light rays reflecting off your skin and not out of some stupid screen. This is unacceptable.. Be mine forever already.`,image:""},
+  "possessive-midday-obsessed":{message:`POSSESSIVE • MIDDAY • OBSESSED\n\nHow dare the sunlight touch you everyday but I dont? How dare the showerhead see your undress but I dont? How dare the water flow over your body but my hands dont? If i were god, these things would not exist....`,image:""}
+
+};
+
+</script>
+
+</body>
+</html>
