@@ -21,6 +21,22 @@
   #choices button{ margin:12px; }
   #yesBtn{ background:#ff4d6d; }
   #noBtn{ background:#666; }
+
+  .secretLink{
+  margin-top:20px;
+  font-size:14px;
+  opacity:0.6;
+  cursor:pointer;
+  transition:0.3s ease;
+  letter-spacing:1px;
+}
+
+.secretLink:hover{
+  opacity:1;
+  color:#ff8fa3;
+  text-shadow:0 0 10px rgba(255,143,163,0.6);
+}
+
 </style>
 </head>
 <body>
@@ -31,6 +47,7 @@
     <input id="pwd" placeholder="DD-MM-YYYY" />
     <br><button onclick="unlock()">Open</button>
     <p id="err"></p>
+    <p class="secretLink" onclick="goToHarsh()">or… unlock something else 💌</p>
   </div>
 
   <div id="story" class="hidden">
@@ -124,6 +141,10 @@ function noClicked(){
   if(noCount>1) text+=` x${noCount}`;
   text+=" be my valentine";
   document.getElementById('proposal').innerText=text;
+}
+
+function goToHarsh(){
+  window.location.href = "harsh.html";
 }
 </script>
 </body>
