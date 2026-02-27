@@ -24,6 +24,7 @@ body{
 .book{
   width:90%;
   max-width:800px;
+  height:600px;              /* Fixed height */
   background:#fffdf8;
   padding:60px;
   border-radius:6px;
@@ -32,7 +33,11 @@ body{
     inset 0 0 40px rgba(184,155,94,0.08);
   text-align:center;
   position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
+
 
 h1{
   font-family:'Playfair Display', serif;
@@ -82,12 +87,13 @@ button:hover{
 .storyText{
   font-size:22px;
   line-height:1.8;
-  margin:40px 0;
-  min-height:140px;
-  animation:fade 1s ease;
-  text-align: justify;
-
+  text-align:justify;
+  flex-grow:1;
+  overflow-y:auto;       /* Scroll if text is long */
+  margin:30px 0;
+  padding-right:10px;
 }
+
 
 @keyframes fade{
   from{opacity:0; transform:translateY(15px);}
