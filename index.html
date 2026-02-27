@@ -36,6 +36,41 @@
   color:#ff8fa3;
   text-shadow:0 0 10px rgba(255,143,163,0.6);
 }
+.waxSeal{
+  position:absolute;
+  bottom:25px;
+  right:30px;
+  width:55px;
+  height:55px;
+  background:radial-gradient(circle at 30% 30%, #7a1f2c, #4b0f18 70%);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:
+    0 6px 15px rgba(0,0,0,0.4),
+    inset 0 3px 6px rgba(255,255,255,0.15),
+    inset 0 -4px 8px rgba(0,0,0,0.4);
+  transition:0.3s ease;
+  opacity:0.85;
+}
+
+.waxSeal span{
+  font-family:'Playfair Display', serif;
+  color:#f3d9a4;
+  font-size:20px;
+  letter-spacing:2px;
+  text-shadow:0 1px 2px rgba(0,0,0,0.6);
+}
+
+.waxSeal:hover{
+  transform:scale(1.1);
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.5),
+    inset 0 3px 6px rgba(255,255,255,0.2),
+    inset 0 -5px 10px rgba(0,0,0,0.5);
+}
 
 </style>
 </head>
@@ -48,6 +83,11 @@
     <br><button onclick="unlock()">Open</button>
     <p id="err"></p>
     <p class="secretLink" onclick="goToHarsh()">or… unlock something else 💌</p>
+
+    <div class="waxSeal" onclick="goToMidnight()">
+  <span>M</span>
+</div>
+
   </div>
 
   <div id="story" class="hidden">
@@ -146,6 +186,11 @@ function noClicked(){
 function goToHarsh(){
   window.location.href = "harsh.html";
 }
+  function goToMidnight(){
+  window.location.href = "midnight.html";
+}
+
+
 </script>
 </body>
 </html>
