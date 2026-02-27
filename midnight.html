@@ -24,7 +24,6 @@ body{
 .book{
   width:90%;
   max-width:800px;
-  height:600px;              /* Fixed height */
   background:#fffdf8;
   padding:60px;
   border-radius:6px;
@@ -33,10 +32,15 @@ body{
     inset 0 0 40px rgba(184,155,94,0.08);
   text-align:center;
   position:relative;
+}
+
+.storyMode{
+  height:600px;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
 }
+
 
 
 h1{
@@ -93,15 +97,6 @@ button:hover{
   margin:30px 0;
   padding-right:10px;
 }
-.storyText::-webkit-scrollbar{
-  width:6px;
-}
-
-.storyText::-webkit-scrollbar-thumb{
-  background:#cbb37a;
-  border-radius:4px;
-}
-
 
 @keyframes fade{
   from{opacity:0; transform:translateY(15px);}
@@ -183,11 +178,15 @@ function unlockTwo(){
   if(document.getElementById("pass2").value.trim() === PASSWORD2){
     document.getElementById("disclaimer").classList.add("hidden");
     document.getElementById("bookContent").classList.remove("hidden");
+
+    document.querySelector(".book").classList.add("storyMode"); // ADD THIS
+
     showText();
   } else {
     document.getElementById("err2").innerText = "Only honesty unlocks the next page.";
   }
 }
+
 
 function showText(){
   document.getElementById("text").innerHTML = pages[i];
