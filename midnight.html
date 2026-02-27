@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Private Chapter</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:
+    radial-gradient(circle at top left, #ffffff 0%, #f6f1e8 60%),
+    linear-gradient(to bottom, #f6f1e8, #efe6d8);
+  font-family:'Cormorant Garamond', serif;
+  color:#2c2c2c;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.book{
+  width:90%;
+  max-width:800px;
+  background:#fffdf8;
+  padding:60px;
+  border-radius:6px;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.08),
+    inset 0 0 40px rgba(184,155,94,0.08);
+  text-align:center;
+  position:relative;
+}
+
+h1{
+  font-family:'Playfair Display', serif;
+  color:#5a1f2c;
+  letter-spacing:1px;
+  margin-bottom:20px;
+}
+
+.subtitle{
+  font-style:italic;
+  opacity:0.8;
+}
+
+input{
+  padding:12px;
+  margin-top:25px;
+  border:1px solid #d8cfc2;
+  background:#faf7f1;
+  border-radius:4px;
+  width:260px;
+  font-size:16px;
+  text-align:center;
+  font-family:'Cormorant Garamond', serif;
+}
+
+button{
+  margin-top:25px;
+  padding:10px 26px;
+  background:#5a1f2c;
+  color:white;
+  border:none;
+  border-radius:4px;
+  cursor:pointer;
+  font-size:15px;
+  letter-spacing:1px;
+  transition:0.3s ease;
+}
+
+button:hover{
+  background:#7a2a3b;
+}
+
+.hidden{
+  display:none;
+}
+
+.storyText{
+  font-size:22px;
+  line-height:1.8;
+  margin:40px 0;
+  min-height:140px;
+  animation:fade 1s ease;
+  text-align: justify;
+
+}
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(15px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.divider{
+  height:1px;
+  width:80px;
+  background:#b89b5e;
+  margin:25px auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="book">
+
+<div id="firstLock">
+  <h1>Our Private Volume</h1>
+  <div class="divider"></div>
+  <p class="subtitle">What you are about to read is only a fragment of the many beautiful things I dream of with you... </p>
+  <input id="pass1" placeholder="Do you remember your safeword?">
+  <br>
+  <button onclick="unlockOne()">Open the Book</button>
+  <p id="err1"></p>
+</div>
+
+<div id="disclaimer" class="hidden">
+  <h1>Before You Turn The Page</h1>
+  <div class="divider"></div>
+  <p class="subtitle">
+    The words ahead are intimate, vulnerable, and deeply personal.
+    Proceed only if your heart feels steady.
+  </p>
+  <input id="pass2" placeholder='Type: I am ready'>
+  <br>
+  <button onclick="unlockTwo()">Proceed</button>
+  <p id="err2"></p>
+</div>
+
+<div id="bookContent" class="hidden">
+  <h1>The Private Chapter</h1>
+  <div class="divider"></div>
+  <div id="text" class="storyText"></div>
+  <div style="margin-top:30px;">
+  <button onclick="prevPage()" id="prevBtn">Previous</button>
+  <button onclick="nextPage()" id="nextBtn">Next</button>
+</div>
+
+</div>
+
+</div>
+
+<script>
+const PASSWORD1 = "midnight";
+const PASSWORD2 = "I am ready";
+
+const pages = [
+"Chapter 1: <br><br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br></br> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+"<p> Chapter 2: </p> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+"Chapter 3: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+"Final page text..."
+];
+
+let i = 0;
+
+function unlockOne(){
+  if(document.getElementById("pass1").value.trim() === PASSWORD1){
+    document.getElementById("firstLock").classList.add("hidden");
+    document.getElementById("disclaimer").classList.remove("hidden");
+  } else {
+    document.getElementById("err1").innerText = "Hint:";
+  }
+}
+
+function unlockTwo(){
+  if(document.getElementById("pass2").value.trim() === PASSWORD2){
+    document.getElementById("disclaimer").classList.add("hidden");
+    document.getElementById("bookContent").classList.remove("hidden");
+    showText();
+  } else {
+    document.getElementById("err2").innerText = "Only honesty unlocks the next page.";
+  }
+}
+
+function showText(){
+  document.getElementById("text").innerHTML = pages[i];
+
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  // Disable Previous on first page
+  prevBtn.disabled = (i === 0);
+
+  // If last page → change button to Exit
+  if(i === pages.length - 1){
+    nextBtn.innerText = "Untill we meet again...";
+  } else {
+    nextBtn.innerText = "Next";
+  }
+}
+
+function nextPage(){
+  if(i < pages.length - 1){
+    i++;
+    showText();
+  } else {
+    // Last page → go back to main story
+    window.location.href = "index.html";
+  }
+}
+
+function prevPage(){
+  if(i > 0){
+    i--;
+    showText();
+  }
+}
+
+
+
+</script>
+
+</body>
+</html>
