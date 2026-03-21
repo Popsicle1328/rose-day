@@ -116,6 +116,14 @@ button:hover{
   mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 
+#endingNote{
+  margin-top:40px;
+  font-size:18px;
+  line-height:1.8;
+  text-align:center;
+  font-style:italic;
+  opacity:0.85;
+}
 
 
 
@@ -336,7 +344,16 @@ But both of us knew something had changed.<br><br>
 
 The restraint we had been holding onto for so long had finally cracked.<br><br>
 
-And this was only the beginning of our desires.`
+And this was only the beginning.`,
+
+<p id="endingNote">
+  Dear Isha, <br><br>
+  There will be more chapters, which would grow ever more intimate.<br><br>
+  And then, perhaps, fantasies we shall one day turn into reality.<br><br>
+  I hope Chapter One was… enjoyable.<br><br>
+  <i>I shall return with more.</i>
+</p>
+
 
 ];
 
@@ -403,6 +420,11 @@ function prevPage(){
   }
 }
 
+if(i === pages.length - 1){
+  setTimeout(()=>{
+    document.getElementById("endingNote").style.opacity = 1;
+  }, 800);
+}
 
 
 </script>
