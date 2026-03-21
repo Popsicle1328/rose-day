@@ -21,37 +21,38 @@ body{
   justify-content:center;
 }
 
+#endingNote{
+  font-size:20px;
+  line-height:1.9;
+  text-align:center;
+  font-style:italic;
+  padding:20px;
+}
+
+
 .book{
   width:90%;
   max-width:800px;
-  height:600px;
   background:#fffdf8;
   padding:40px 50px;
   border-radius:6px;
   box-shadow:
     0 20px 60px rgba(0,0,0,0.08),
     inset 0 0 40px rgba(184,155,94,0.08);
-  position:relative;
-
-  display:flex;
-  flex-direction:column;
+  text-align:center;
 }
-
 
 .storyMode{
   height:600px;
   display:flex;
   flex-direction:column;
-  justify-content:space-between;
 }
-
-
 
 h1{
   font-family:'Playfair Display', serif;
   color:#5a1f2c;
   letter-spacing:1px;
-  margin-bottom:20px;
+  margin-bottom:10px;
 }
 
 .subtitle{
@@ -68,11 +69,10 @@ input{
   width:260px;
   font-size:16px;
   text-align:center;
-  font-family:'Cormorant Garamond', serif;
 }
 
 button{
-  margin-top:25px;
+  margin-top:20px;
   padding:10px 26px;
   background:#5a1f2c;
   color:white;
@@ -80,7 +80,6 @@ button{
   border-radius:4px;
   cursor:pointer;
   font-size:15px;
-  letter-spacing:1px;
   transition:0.3s ease;
 }
 
@@ -89,7 +88,14 @@ button:hover{
 }
 
 .hidden{
-  display:none;
+  display:none !important;
+}
+
+#bookContent{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  text-align:left;
 }
 
 .storyText{
@@ -98,45 +104,27 @@ button:hover{
   font-size:20px;
   line-height:1.8;
   text-align:justify;
-
   padding-right:10px;
 }
 
-  #bookContent{
-  display:flex;
-  flex-direction:column;
-  height:100%;
-}
-  
 .navButtons{
   margin-top:20px;
-}
-
-  .storyText{
-  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  text-align:center;
 }
 
 #endingNote{
-  margin-top:40px;
+  margin-top:30px;
   font-size:18px;
-  line-height:1.8;
   text-align:center;
   font-style:italic;
-  opacity:0.85;
-}
-
-
-
-@keyframes fade{
-  from{opacity:0; transform:translateY(15px);}
-  to{opacity:1; transform:translateY(0);}
+  opacity:0.9;
 }
 
 .divider{
   height:1px;
   width:80px;
   background:#b89b5e;
-  margin:25px auto;
+  margin:20px auto;
 }
 </style>
 </head>
@@ -145,22 +133,24 @@ button:hover{
 
 <div class="book">
 
+<!-- LOCK 1 -->
 <div id="firstLock">
   <h1>Our Private Volume</h1>
   <div class="divider"></div>
-  <p class="subtitle">What you are about to read is only a fragment of the many beautiful things I dream of with you... </p>
+  <p class="subtitle">What you are about to read is only a fragment of the many beautiful things I dream of with you...</p>
   <input id="pass1" placeholder="Do you remember your safeword?">
   <br>
   <button onclick="unlockOne()">Open the Book</button>
   <p id="err1"></p>
 </div>
 
+<!-- LOCK 2 -->
 <div id="disclaimer" class="hidden">
   <h1>Before You Turn The Page</h1>
   <div class="divider"></div>
   <p class="subtitle">
-    Dear Isha,
-    This project is intimate and contain themes you consider nsfw.
+    Dear Isha,<br>
+    This project is intimate and contains themes you may consider nsfw.<br>
     Please continue only when you are comfortable.
   </p>
   <input id="pass2" placeholder='Type: I am ready'>
@@ -169,6 +159,7 @@ button:hover{
   <p id="err2"></p>
 </div>
 
+<!-- BOOK -->
 <div id="bookContent" class="hidden">
   <h1>The Private Chapter</h1>
   <div class="divider"></div>
@@ -181,14 +172,13 @@ button:hover{
   </div>
 </div>
 
-
-</div>
-
 </div>
 
 <script>
 const PASSWORD1 = "pineapple";
 const PASSWORD2 = "i am ready";
+
+let i = 0;
 
 const pages = [
 
@@ -344,20 +334,21 @@ But both of us knew something had changed.<br><br>
 
 The restraint we had been holding onto for so long had finally cracked.<br><br>
 
-And this was only the beginning.`,
-
-<p id="endingNote">
-  Dear Isha, <br><br>
-  There will be more chapters, which would grow ever more intimate.<br><br>
-  And then, perhaps, fantasies we shall one day turn into reality.<br><br>
-  I hope Chapter One was… enjoyable.<br><br>
-  <i>I shall return with more.</i>
-</p>
+And this was only the beginning of our desires.`,
 
 
+`<div id="endingNote">
+Dear Isha, <br><br>
+
+There will be more chapters, which would grow ever more intimate.<br><br>
+
+And then there will be fantasies, that we will turn into reality one day.<br><br>
+
+I hope Chapter One was enjoyable.<br><br>
+
+<i>I shall return with more soon.</i>
+</div>`
 ];
-
-let i = 0;
 
 function unlockOne(){
   if(document.getElementById("pass1").value.trim().toLowerCase() === PASSWORD1){
@@ -372,43 +363,32 @@ function unlockTwo(){
   if(document.getElementById("pass2").value.trim().toLowerCase() === PASSWORD2){
     document.getElementById("disclaimer").classList.add("hidden");
     document.getElementById("bookContent").classList.remove("hidden");
-
-    document.querySelector(".book").classList.add("storyMode"); // ADD THIS
-
+    document.querySelector(".book").classList.add("storyMode");
     showText();
   } else {
     document.getElementById("err2").innerText = "Only honesty unlocks the next page.";
   }
 }
 
-
 function showText(){
   const textDiv = document.getElementById("text");
-
   textDiv.innerHTML = pages[i];
-
-  // ✅ RESET SCROLL TO TOP
   textDiv.scrollTop = 0;
 
-  const prevBtn = document.getElementById("prevBtn");
-  const nextBtn = document.getElementById("nextBtn");
-
-  prevBtn.disabled = (i === 0);
+  document.getElementById("prevBtn").disabled = (i === 0);
 
   if(i === pages.length - 1){
-    nextBtn.innerText = "Close the Book";
+    document.getElementById("nextBtn").innerText = "Close the Book";
   } else {
-    nextBtn.innerText = "Next";
+    document.getElementById("nextBtn").innerText = "Next";
   }
 }
-
 
 function nextPage(){
   if(i < pages.length - 1){
     i++;
     showText();
   } else {
-    // Last page → go back to main story
     window.location.href = "index.html";
   }
 }
@@ -419,14 +399,6 @@ function prevPage(){
     showText();
   }
 }
-
-if(i === pages.length - 1){
-  setTimeout(()=>{
-    document.getElementById("endingNote").style.opacity = 1;
-  }, 800);
-}
-
-
 </script>
 
 </body>
