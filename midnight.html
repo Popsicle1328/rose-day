@@ -153,8 +153,8 @@ button:hover{
 </div>
 
 <script>
-const PASSWORD1 = "midnight";
-const PASSWORD2 = "I am ready";
+const PASSWORD1 = "pineapple";
+const PASSWORD2 = "i am ready";
 
 const pages = [
 "Chapter 1: <br><br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br></br> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -166,7 +166,7 @@ const pages = [
 let i = 0;
 
 function unlockOne(){
-  if(document.getElementById("pass1").value.trim() === PASSWORD1){
+  if(document.getElementById("pass1").value.trim().toLowerCase() === PASSWORD1){
     document.getElementById("firstLock").classList.add("hidden");
     document.getElementById("disclaimer").classList.remove("hidden");
   } else {
@@ -175,7 +175,7 @@ function unlockOne(){
 }
 
 function unlockTwo(){
-  if(document.getElementById("pass2").value.trim() === PASSWORD2){
+  if(document.getElementById("pass2").value.trim().toLowerCase() === PASSWORD2){
     document.getElementById("disclaimer").classList.add("hidden");
     document.getElementById("bookContent").classList.remove("hidden");
 
