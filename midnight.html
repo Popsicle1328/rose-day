@@ -24,15 +24,19 @@ body{
 .book{
   width:90%;
   max-width:800px;
+  height:600px;
   background:#fffdf8;
-  padding:60px;
+  padding:40px 50px;
   border-radius:6px;
   box-shadow:
     0 20px 60px rgba(0,0,0,0.08),
     inset 0 0 40px rgba(184,155,94,0.08);
-  text-align:center;
   position:relative;
+
+  display:flex;
+  flex-direction:column;
 }
+
 
 .storyMode{
   height:600px;
@@ -89,14 +93,31 @@ button:hover{
 }
 
 .storyText{
-  font-size:22px;
+  flex:1;
+  overflow-y:auto;
+  font-size:20px;
   line-height:1.8;
   text-align:justify;
-  flex-grow:1;
-  overflow-y:auto;       /* Scroll if text is long */
-  margin:30px 0;
+
   padding-right:10px;
 }
+
+  #bookContent{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+  
+.navButtons{
+  margin-top:20px;
+}
+
+  .storyText{
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+
+
 
 @keyframes fade{
   from{opacity:0; transform:translateY(15px);}
@@ -143,11 +164,15 @@ button:hover{
 <div id="bookContent" class="hidden">
   <h1>The Private Chapter</h1>
   <div class="divider"></div>
+
   <div id="text" class="storyText"></div>
-  <div style="margin-top:30px;">
-  <button onclick="prevPage()" id="prevBtn">Previous</button>
-  <button onclick="nextPage()" id="nextBtn">Next</button>
+
+  <div class="navButtons">
+    <button onclick="prevPage()" id="prevBtn">Previous</button>
+    <button onclick="nextPage()" id="nextBtn">Next</button>
+  </div>
 </div>
+
 
 </div>
 
@@ -341,21 +366,25 @@ function unlockTwo(){
 
 
 function showText(){
-  document.getElementById("text").innerHTML = pages[i];
+  const textDiv = document.getElementById("text");
+
+  textDiv.innerHTML = pages[i];
+
+  // ✅ RESET SCROLL TO TOP
+  textDiv.scrollTop = 0;
 
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
 
-  // Disable Previous on first page
   prevBtn.disabled = (i === 0);
 
-  // If last page → change button to Exit
   if(i === pages.length - 1){
-    nextBtn.innerText = "Untill we meet again...";
+    nextBtn.innerText = "Close the Book";
   } else {
     nextBtn.innerText = "Next";
   }
 }
+
 
 function nextPage(){
   if(i < pages.length - 1){
