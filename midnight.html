@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -154,7 +154,7 @@ button:hover{
 <div class="book">
 
 <!-- LOCK 1 -->
-<div id="firstLock" class="centerScreen">
+<!-- <div id="firstLock" class="centerScreen">
 
   <h1>A short story for you</h1>
   <div class="divider"></div>
@@ -166,7 +166,7 @@ button:hover{
 </div>
 
 <!-- LOCK 2 -->
-<div id="disclaimer" class="hidden centerScreen">
+<!-- <div id="disclaimer" class="hidden centerScreen">
 
   <h1>Before You Turn The Page</h1>
   <div class="divider"></div>
@@ -182,9 +182,9 @@ button:hover{
 </div>
 
 <!-- BOOK -->
-<div id="bookContent" class="hidden">
+<!-- <div id="bookContent" class="hidden">
   <!--<h1>The Private Chapter</h1>-->
-  <div class="divider"></div>
+  <!-- <div class="divider"></div>
 
   <div id="text" class="storyText"></div>
 
@@ -192,11 +192,11 @@ button:hover{
     <button onclick="prevPage()" id="prevBtn">Previous</button>
     <button onclick="nextPage()" id="nextBtn">Next</button>
   </div>
-</div>
+</div> -->
 
-</div>
+<!-- </div> -->
 
-<script>
+<!-- <script>
 const PASSWORD1 = "pineapple";
 const PASSWORD2 = "i am ready";
 
@@ -370,58 +370,58 @@ I hope Chapter One was enjoyable.<br><br>
 
 <i>I shall return with more soon.</i>
 </div>`
-];
+]; -->
 
-function unlockOne(){
-  if(document.getElementById("pass1").value.trim().toLowerCase() === PASSWORD1){
-    document.getElementById("firstLock").classList.add("hidden");
-    document.getElementById("disclaimer").classList.remove("hidden");
-  } else {
-    document.getElementById("err1").innerText = "Hint: apple";
-  }
-}
+// function unlockOne(){
+//   if(document.getElementById("pass1").value.trim().toLowerCase() === PASSWORD1){
+//     document.getElementById("firstLock").classList.add("hidden");
+//     document.getElementById("disclaimer").classList.remove("hidden");
+//   } else {
+//     document.getElementById("err1").innerText = "Hint: apple";
+//   }
+// }
 
-function unlockTwo(){
-  if(document.getElementById("pass2").value.trim().toLowerCase() === PASSWORD2){
-    document.getElementById("disclaimer").classList.add("hidden");
-    document.getElementById("bookContent").classList.remove("hidden");
-    document.querySelector(".book").classList.add("storyMode");
-    showText();
-  } else {
-    document.getElementById("err2").innerText = "Only honesty unlocks the next page.";
-  }
-}
+// function unlockTwo(){
+//   if(document.getElementById("pass2").value.trim().toLowerCase() === PASSWORD2){
+//     document.getElementById("disclaimer").classList.add("hidden");
+//     document.getElementById("bookContent").classList.remove("hidden");
+//     document.querySelector(".book").classList.add("storyMode");
+//     showText();
+//   } else {
+//     document.getElementById("err2").innerText = "Only honesty unlocks the next page.";
+//   }
+// }
 
-function showText(){
-  const textDiv = document.getElementById("text");
-  textDiv.innerHTML = pages[i];
-  textDiv.scrollTop = 0;
+// function showText(){
+//   const textDiv = document.getElementById("text");
+//   textDiv.innerHTML = pages[i];
+//   textDiv.scrollTop = 0;
 
-  document.getElementById("prevBtn").disabled = (i === 0);
+//   document.getElementById("prevBtn").disabled = (i === 0);
 
-  if(i === pages.length - 1){
-    document.getElementById("nextBtn").innerText = "Close the Book";
-  } else {
-    document.getElementById("nextBtn").innerText = "Next";
-  }
-}
+//   if(i === pages.length - 1){
+//     document.getElementById("nextBtn").innerText = "Close the Book";
+//   } else {
+//     document.getElementById("nextBtn").innerText = "Next";
+//   }
+// }
 
-function nextPage(){
-  if(i < pages.length - 1){
-    i++;
-    showText();
-  } else {
-    window.location.href = "index.html";
-  }
-}
+// function nextPage(){
+//   if(i < pages.length - 1){
+//     i++;
+//     showText();
+//   } else {
+//     window.location.href = "index.html";
+//   }
+// }
 
-function prevPage(){
-  if(i > 0){
-    i--;
-    showText();
-  }
-}
-</script>
+// function prevPage(){
+//   if(i > 0){
+//     i--;
+//     showText();
+//   }
+// }
+// </script>
 
-</body>
-</html>
+// </body>
+// </html> -->
