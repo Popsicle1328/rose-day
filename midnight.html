@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Private Chapter</title>
+<title>A short story, for you</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
 
@@ -31,10 +31,11 @@ body{
 
 
 .book{
-  width:90%;
-  max-width:800px;
+  width:92%;
+  max-width:900px;   /* slightly wider */
+  height:650px;      /* taller */
   background:#fffdf8;
-  padding:40px 50px;
+  padding:30px 35px; /* reduced padding = more reading space */
   border-radius:6px;
   box-shadow:
     0 20px 60px rgba(0,0,0,0.08),
@@ -43,17 +44,20 @@ body{
 }
 
 .storyMode{
-  height:600px;
+  height:650px;
   display:flex;
   flex-direction:column;
 }
+
 
 h1{
   font-family:'Playfair Display', serif;
   color:#5a1f2c;
   letter-spacing:1px;
-  margin-bottom:10px;
+  margin-bottom:10px; /* reduced */
+  font-size:28px;     /* slightly smaller */
 }
+
 
 .subtitle{
   font-style:italic;
@@ -83,6 +87,21 @@ button{
   transition:0.3s ease;
 }
 
+.centerScreen{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.centerScreen{
+  animation: fade 0.8s ease;
+}
+
+
+
 button:hover{
   background:#7a2a3b;
 }
@@ -101,7 +120,7 @@ button:hover{
 .storyText{
   flex:1;
   overflow-y:auto;
-  font-size:20px;
+  font-size:18px;
   line-height:1.8;
   text-align:justify;
   padding-right:10px;
@@ -124,8 +143,9 @@ button:hover{
   height:1px;
   width:80px;
   background:#b89b5e;
-  margin:20px auto;
+  margin:15px auto; /* was 25px */
 }
+
 </style>
 </head>
 
@@ -134,7 +154,8 @@ button:hover{
 <div class="book">
 
 <!-- LOCK 1 -->
-<div id="firstLock">
+<div id="firstLock" class="centerScreen">
+
   <h1>A short story for you</h1>
   <div class="divider"></div>
   <p class="subtitle">What you are about to read is only a fragment of the many beautiful things I dream of with you...</p>
@@ -145,7 +166,8 @@ button:hover{
 </div>
 
 <!-- LOCK 2 -->
-<div id="disclaimer" class="hidden">
+<div id="disclaimer" class="hidden centerScreen">
+
   <h1>Before You Turn The Page</h1>
   <div class="divider"></div>
   <p class="subtitle">
@@ -161,7 +183,7 @@ button:hover{
 
 <!-- BOOK -->
 <div id="bookContent" class="hidden">
-  <h1>The Private Chapter</h1>
+  <!--<h1>The Private Chapter</h1>-->
   <div class="divider"></div>
 
   <div id="text" class="storyText"></div>
